@@ -1,0 +1,77 @@
+{% extends 'aibased/base.html' %}
+
+{% block ann %}class="active"{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="col-sm-offset-4 col-sm-4">
+            <h3 style="color: whitesmoke;">Neural Network Training</h3>
+            <form class="form-horizontal" role="form" action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <label for="exampleInputEmail1" class="whiteSmoak">Train To Test Ratio (%)</label>
+                        <input name="ratio" type="number" class="form-control" min="10" max="100" placeholder="0.0%">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8" id="algorithmType">
+                        <label for="algorithmType" class="whiteSmoak" >Algorithm Name</label>
+                        <select class="form-control" name="algorithm" id="algorithm">
+                            <option>lbfgs</option>
+                            <option>adam</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <label for="exampleInputEmail1" class="whiteSmoak">Hidden Layer Nodes</label>
+                        <input name="nodes" type="number" class="form-control" min="2" max="10" placeholder="7">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            <label class="whiteSmoak">
+                                <input name="accuracy" type="checkbox"> Test Accuracy
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-sm-4">
+            <h3 class="whiteSmoak">Training Results of Neural Network</h3>
+            <div class="whiteSmoak">
+                <table class="table table-hover" >
+                    <tbody id="resultTable">
+                    <tr>
+                        <td>No of Trained inputs</td>
+                        <td>{{ trained }}</td>
+                    </tr>
+                    <tr>
+                        <td>No of Tested inputs</td>
+                        <td>{{ tested }}</td>
+                    </tr>
+                    <tr>
+                        <td>No of correct Results</td>
+                        <td>{{ correct }}</td>
+                    </tr>
+                    <tr>
+                        <td>Accuracy(%)</td>
+                        <td>{{ accuracy }}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            {% if text %}
+                <h5 class="whiteSmoak">{{ text }}</h5>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

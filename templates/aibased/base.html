@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" type="text/css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+    <!-- js -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <title>{% block title %}Fault Detector{% endblock %}</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'aibased:index' %}">
+                <span class="glyphicon glyphicon-flash" aria-hidden="true">Fault Detector</span></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li {% block monitor %}{% endblock %}>
+                    <a href="{% url 'aibased:monitor' %}">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">&nbsp;Monitor</span>
+                    </a>
+                </li>
+                <li {% block ann %}{% endblock %}>
+                    <a class="navbar-link" href="{% url 'aibased:ann' %}">
+                        <span class="glyphicon glyphicon-education" aria-hidden="true">&nbsp;Neural Network</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                    <li class="">
+                        <a href="{% url 'aibased:user-logout' %}">
+                            <span class="glyphicon glyphicon-off"
+                                  aria-hidden="true">&nbsp;Logout {{ request.user }}</span>
+                        </a>
+                    </li>
+
+                {% else %}
+                    <li class="">
+                        <a href="{% url 'aibased:user-signup' %}">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;Signup</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'aibased:user-login' %}">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;Login</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+</nav>
+{% block body %}
+{% endblock %}
+</body>
+</html>
