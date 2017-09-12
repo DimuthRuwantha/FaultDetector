@@ -1,1 +1,1 @@
-web: gunicorn faultdetector.wsgi --log-file -
+web: gunicorn FaultDetector.wsgi --log-file -
