@@ -5,9 +5,9 @@ from django.db import models
 
 class TrainingLog(models.Model):
     time = models.DateTimeField()
-    train_ratio = models.IntegerField(max_length=2)
+    train_ratio = models.IntegerField()
     algorithm_name = models.CharField(max_length=20)
-    hidden_layer_nodes = models.IntegerField(max_length=2)
+    hidden_layer_nodes = models.IntegerField()
     accuracy_tested = models.BooleanField(default=False)
     trained_inputs = models.IntegerField()
     tested_inputs = models.IntegerField()

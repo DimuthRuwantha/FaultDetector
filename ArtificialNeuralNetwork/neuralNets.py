@@ -69,7 +69,17 @@ def check_accuracy(results, output):
     return accuracy, (accuracy / output_length) * 100
 
 
-def run(algorithm='lbfgs', h_l_size=7, ratio=50, test_accuracy=True):
+def run(algorithm='lbfgs', h_l_size=7, ratio=50, test_accuracy=True, reset=True):
+    if reset:
+        accuracy = "-"
+        predicted_correct = "-"
+        tr_in_matrix1 = []
+        tr_out_matrix1 = []
+        tst_in_matrix1 = []
+        tst_out_matrix1 = []
+        training = []
+        testing = []
+
     print('Printing django')
     start = dt.now()
     training, testing, classes = util.file_reader(ratio=ratio)
@@ -87,10 +97,8 @@ def run(algorithm='lbfgs', h_l_size=7, ratio=50, test_accuracy=True):
         print(a)
         predicted_correct, accuracy = check_accuracy(a, tst_out_matrix1)
         print(accuracy)
-        return len(training), len(testing), predicted_correct, accuracy
 
-    return len(training), len(testing)
-
+    return len(training), len(testing), predicted_correct, accuracy
 
 if __name__ == '__main__':
     tr, tst, pred, acc = run(algorithm='lbfgs', h_l_size=7, ratio=50, test_accuracy=True)

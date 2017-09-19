@@ -8,11 +8,14 @@ from .models import TrainingLog
 from . import neural
 
 
-class IndexView(generic.ListView):
+class IndexView(View):
     template_name = 'aibased/index.html'
 
-    def get_queryset(self):
-        return None
+    def get(self, request):
+        return render(request, 'aibased/index.html', context=None)
+
+    def post(self, request):
+        return render(request, 'aibased/index.html', context=None)
 
 
 class Monitor(generic.ListView):
@@ -20,6 +23,20 @@ class Monitor(generic.ListView):
 
     def get_queryset(self):
         return None
+
+
+# aibased/monitor/fault
+class Fault(View):
+    # template_name = 'aibased/monitor.html'
+
+    def get(self, request):
+        j_object = request
+        return j_object
+
+    def post(self, request):
+        json_object = request
+
+        return json_object
 
 
 class NeuralNetwork(View):
