@@ -12,3 +12,9 @@ class TrainingLog(models.Model):
     trained_inputs = models.IntegerField()
     tested_inputs = models.IntegerField()
     accuracy = models.IntegerField()
+
+
+class PreFaults(models.Model):
+    date = models.DateTimeField()
+    location = models.CharField(max_length=200)
+    fault = models.CharField(max_length=100)

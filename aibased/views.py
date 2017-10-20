@@ -1,12 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.views.generic import View
 from .forms import RegisterForm, LoginForm
 from .models import TrainingLog
-
+from .models import PreFaults
+from channels.channel import Group
+from notifications import utils
+from notifications.models import Room
+import json
 from . import neural
+from ArtificialNeuralNetwork.NeuralNets import NeuralNets
 
+neural_object = None
 
 class IndexView(View):
     template_name = 'aibased/index.html'
@@ -21,22 +27,48 @@ class IndexView(View):
 class Monitor(generic.ListView):
     template_name = 'aibased/monitor.html'
 
+    def get(self, request):
+        # pre_faults = PreFaults.objects.all().order_by('-id')[:3]  # limit to 3
+        object_list = PreFaults.objects.all().order_by('-id')[:3]  # limit to 3
+        # faults = reversed(pre_faults)
+        rooms = Room.objects.order_by("title")
+
+        return render(request, self.template_name, {'faults': object_list, 'rooms': rooms})
+
     def get_queryset(self):
-        return None
+        return PreFaults.objects.all()
 
 
 # aibased/monitor/fault
 class Fault(View):
     # template_name = 'aibased/monitor.html'
 
-    def get(self, request):
-        j_object = request
-        return j_object
+    def get(self):
+        return HttpResponse("OK")
 
     def post(self, request):
-        json_object = request
 
-        return json_object
+        received_json_data = json.loads(request.body.decode('utf-8'))
+
+        location = received_json_data.get('location')
+        v1 = received_json_data.get('v1')
+        v2 = received_json_data.get('v2')
+        v3 = received_json_data.get('v3')
+        i1 = received_json_data.get('i1')
+        i2 = received_json_data.get('i2')
+        i3 = received_json_data.get('i3')
+        lst = [v1, v2, v3, i1, i2, i3]
+
+        result = neural_object.predict(lst)
+
+
+
+        user = request.user
+        room = utils.get_room_or_error(1, user)
+        room.send_message("message", user)
+
+
+        return HttpResponse("Message Received")
 
 
 class NeuralNetwork(View):
@@ -45,8 +77,9 @@ class NeuralNetwork(View):
 
     def get(self, request):
         # form = self.form_class(None)
-        text = '5'
-        return render(request, self.template_name, {'text': text})
+        # text = '5'
+        # return render(request, self.template_name, {'text': text})
+        return render(request, self.template_name, {})
 
     def post(self, request):
         check_tests = False
@@ -60,8 +93,13 @@ class NeuralNetwork(View):
         if test_accuracy == 'on':
             check_tests = True
 
-        tr, tst, pred, acc = neural.run(algorithm=algorithm, h_l_size=h_l_nodes, ratio=ratio / 100,
+        ann = NeuralNets()
+
+        tr, tst, pred, acc = ann.run(algorithm=algorithm, h_l_size=h_l_nodes, ratio=ratio / 100,
                                         test_accuracy=check_tests)
+
+        neural_object = ann.get_ann_classifier()
+        # neural_object = NeuralNets.get_ann_classifier()
 
         context = {'trained': tr, 'tested': tst, 'correct': pred, 'accuracy': acc}
         return render(request, self.template_name, context)

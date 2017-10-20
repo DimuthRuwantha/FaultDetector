@@ -33,12 +33,14 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'aibased.apps.AibasedConfig',
+    'notifications.apps.NotificationsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,21 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'FaultDetector.urls'
+
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
+# Channel layer definitions
+# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+        "ROUTING": "FaultDetector.routing.channel_routing",
+    },
+}
 
 TEMPLATES = [
     {
@@ -124,4 +141,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
