@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import TrainingLog, PreFaults
+from .models import TrainingLog, PreFault
 
 # Register your models here.
 
 admin.site.register(TrainingLog)
-admin.site.register(PreFaults)
+admin.site.register(PreFault)

@@ -3,7 +3,41 @@
 {% block ann %}class="active"{% endblock %}
 {% block body %}
     <div class="container">
-        <div class="col-sm-offset-4 col-sm-4">
+    <div class="col-sm-4">
+        <h3 class="whiteSmoak">Trained Results of Neural Network</h3>
+            <div class="whiteSmoak">
+                <table class="table table-hover" >
+                    <tbody id="resultTable">
+                    <tr>
+                        <td>Trained by:</td>
+                        <td>{{ log.trained_by }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date Neural Network trained</td>
+                        <td>{{ log.time }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ratio of trained data</td>
+                        <td>{{log.train_ratio }}</td>
+                    </tr>
+                    <tr>
+                        <td>Algorithm used</td>
+                        <td>{{ log.algorithm_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>No of hidden layer nodes</td>
+                        <td>{{ log.hidden_layer_nodes }}</td>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td>
+                        <td>{{ log.accuracy }}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+    </div>
+        <div class="col-sm-4">
             <h3 style="color: whitesmoke;">Neural Network Training</h3>
             <form class="form-horizontal" role="form" action="" method="post">
                 {% csrf_token %}
@@ -42,7 +76,6 @@
                 </div>
             </form>
         </div>
-
 
         <div class="col-sm-4">
             <h3 class="whiteSmoak">Training Results of Neural Network</h3>

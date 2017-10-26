@@ -22,12 +22,12 @@ def file_reader(ratio=0.5):
 
     for file_path in file_paths:
 
-        training, testing = load_data_set(file_path, data_split_ratio)
+        training, testing = load_data_set(file_path, data_split_ratio, training, testing)
 
     return training, testing, class_titles
 
 
-def load_data_set(filename, split_ratio, training_set=[], testing_set=[]):
+def load_data_set(filename, split_ratio, training_set, testing_set):
     """load_data_set split the data into training and testing data using the ratio
     :return training_set
     :return testing_set

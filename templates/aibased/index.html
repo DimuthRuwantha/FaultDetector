@@ -4,15 +4,21 @@
     <style>
         #frame {
             border-radius: 5px;
-            border: 1px solid red;
-            min-height: inherit;
+            border: 3px solid #E46A68;
+            padding-top: 10px;
+            height: 200px;
+            background-color: whitesmoke;
+            text-decoration-color: black;
+            opacity: 0.8;
         }
-    #light-ash{
-        color: #c8c8c8;
-    }
-    h3{
-        color: white;
-    }
+
+                #ptext {
+                    text-align: justify;
+                }
+        h3 {
+            color: dodgerblue;
+            align-content: center;
+        }
     </style>
     <div class="container">
         <!-- Project Title Animation begin -->
@@ -33,26 +39,32 @@
         <div class="row" style="margin-top: 30px;">
             <div class="col-sm-4">
                 <div class="col-sm-offset-1 col-sm-10" id="frame">
-                    <h3>Set Threashold Values</h3>
-                    <p id="light-ash">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Lorem ipsum
-                        dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <h3>Fault Detection</h3>
+                    <p id="ptext"><br>Faults can be identified by the system integrated in each location.
+                    When there is an over current in distribution lines, the system reads the current values and voltage
+                        values and send to the server.</p>
+                    <a class="btn btn-primary" href="/aibased/monitor" role="button">Goto <span
+                            class="glyphicon glyphicon-arrow-right" aria-hidden="true">&nbsp</span></a>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="col-sm-offset-1 col-sm-10" id="frame">
+                <div class="col-sm-offset-1 col-sm-10" id="frame" style="height: 200px">
                     <h3>Train Neural Network</h3>
-                    <p id="light-ash">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Lorem ipsum
-                        dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-
+                    <p id="ptext"><br>The Neural Network can be trained by customizing number of nodes and the algorithm. The accuracy
+                        and test results will be displayed so if the training is not satisfied, it can be trained again.</p>
+                    <a class="btn btn-primary" href="/aibased/monitor" role="button">Goto <span
+                            class="glyphicon glyphicon-arrow-right" aria-hidden="true">&nbsp</span></a>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="col-sm-offset-1 col-sm-10" id="frame">
                     <h3>Online Monitoring</h3>
-                    <p id="light-ash">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-
+                    <p id="ptext"><br>Real time faults will be displayed on the monitoring system. Fault type, area, date and time
+                        can
+                        be read as a notification. Previous faults also can be viewed through this monitoring
+                        system.</p>
+                    <a class="btn btn-primary" href="/aibased/monitor" role="button">Goto <span
+                            class="glyphicon glyphicon-arrow-right" aria-hidden="true">&nbsp</span></a>
                 </div>
             </div>
         </div>

@@ -2,9 +2,10 @@ import numpy as np
 
 
 # Created by DimRu on 23-Jun-17
+k = None
 
 
-class NeuralNetObject:
+class NeuralNetObject(object):
     """ Add the class description here """
 
     def __init__(self):
@@ -14,6 +15,8 @@ class NeuralNetObject:
         self.__input_nodes = 0
         self.__sn0 = list([[]])
         self.__sn1 = list([[]])
+
+        self.ann_object = None
 
     def create_network(self, input_matrix=list([[]]), output_matrix=list([[]])):
         self.__output_nodes = len(output_matrix[0])
@@ -33,3 +36,9 @@ class NeuralNetObject:
         syn1 = 2 * np.random.random((self.__input_nodes, self.__output_nodes)) - 1    # +1 due to activation function
 
         return syn0, syn1
+
+    def __get__(self, instance, owner):
+        return self.ann_object
+
+    def __set__(self, instance, value):
+        self.ann_object = value

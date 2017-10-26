@@ -4,13 +4,27 @@ from datetime import datetime as dt
 
 from sklearn.neural_network import multilayer_perceptron as nn
 
+from ArtificialNeuralNetwork.NeuralNetwork import NeuralNetObject
 
-class NeuralNets:
+css = None
+
+
+class NeuralNets(object):
 
     clf = None
+    x = 0
 
-    def __init__(self):
-        pass
+    def __init__(self, algorithm='lbfgs', h_l_size=7, ratio=0.50):
+
+        self.x += 1
+        print('Printing django {0}'.format(self.x))
+        start = dt.now()
+        self.training, self.testing, self.classes = util.file_reader(ratio=ratio)
+
+        end = dt.now()
+
+        self.clf = nn.MLPClassifier(solver=algorithm, alpha=1e-5, hidden_layer_sizes=h_l_size, random_state=1)
+        print("time elapsed to load data : ", end - start)
 
     def get_matrices(self, training_set=[]):
         matrix_list = []
@@ -21,6 +35,47 @@ class NeuralNets:
         output_array = self.process_output_matrix(output_list)
         input_array = np.array(matrix_list)
         return input_array, output_array
+
+    @staticmethod
+    def process_fault(result_list=[]):
+        out = []
+        for result in result_list:
+
+            f_value = "{0}{1}{2}{3}".format(result[0], result[1], result[2], result[3])
+            b_value = int(f_value, 2)
+
+            if b_value == 13:
+                out.append("A to B to Grd")
+
+            elif b_value == 12:
+                out.append('A to B')
+
+            elif b_value == 10:
+                out.append('C to A')
+
+            elif b_value == 9:
+                out.append('A to Grd')
+
+            elif b_value == 7:
+                out.append('B to C to Grd')
+
+            elif b_value == 6:
+                out.append('B to C')
+
+            elif b_value == 5:
+                out.append('B to Grd')
+
+            elif b_value == 3:
+                out.append('C to Grd')
+
+            elif b_value == 11:
+                out.append('A to C to Grd')
+
+            elif b_value == 0:
+                out.append('no Fault')
+            else:
+                out.append('Anomaly Behaviour')
+        return out
 
     def process_output_matrix(self, output_list=[]):
         out = []
@@ -71,9 +126,10 @@ class NeuralNets:
                     accuracy += 1
         print('total no of inputs : ', output_length)
         print("Accurately predicted : ", accuracy)
-        return accuracy, (accuracy / output_length) * 100
+        return accuracy, round((accuracy / output_length) * 100, 2)
 
-    def run(self, algorithm='lbfgs', h_l_size=7, ratio=0.50, test_accuracy=True, reset=True):
+    # def run(self, algorithm='lbfgs', h_l_size=7, ratio=0.50, test_accuracy=True, reset=True):
+    def run(self, test_accuracy=True, reset=True):
         if reset:
             accuracy = "-"
             predicted_correct = "-"
@@ -84,18 +140,13 @@ class NeuralNets:
             training = []
             testing = []
 
-        print('Printing django')
-        start = dt.now()
-        training, testing, classes = util.file_reader(ratio=ratio)
-        tr_in_matrix1, tr_out_matrix1 = self.get_matrices(training)
-        tst_in_matrix1, tst_out_matrix1 = self.get_matrices(testing)
-        end = dt.now()
-
-        self.clf = nn.MLPClassifier(solver=algorithm, alpha=1e-5, hidden_layer_sizes=h_l_size, random_state=1)
+        tr_in_matrix1, tr_out_matrix1 = self.get_matrices(self.training)
+        tst_in_matrix1, tst_out_matrix1 = self.get_matrices(self.testing)
         self.clf.fit(tr_in_matrix1, tr_out_matrix1)
 
-
-        print("time elapsed to load data : ", end - start)
+        NeuralNets.clf = self.clf
+        NeuralNets.css = self.clf
+        NeuralNetObject.k = self.clf
 
         if test_accuracy:
             a = self.clf.predict(tst_in_matrix1)
@@ -103,7 +154,7 @@ class NeuralNets:
             predicted_correct, accuracy = self.check_accuracy(a, tst_out_matrix1)
             print(accuracy)
 
-        return len(training), len(testing), predicted_correct, accuracy
+        return len(self.training), len(self.testing), predicted_correct, accuracy
 
     def predict(self, predict_list):
 
@@ -113,10 +164,3 @@ class NeuralNets:
 
     def get_ann_classifier(self):
         return self.clf
-
-# if __name__ == '__main__':
-#     tr, tst, pred, acc = run(algorithm='lbfgs', h_l_size=7, ratio=50, test_accuracy=True)
-#     print(tr)
-#     print(tst)
-#     print(pred)
-#     print(acc)
