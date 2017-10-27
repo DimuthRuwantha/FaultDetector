@@ -66,8 +66,8 @@ hostname = 'redis://{0}:{1}@{2}'.format(user, password, host)
 CHANNEL_LAYERS = {
     "default": {
         # This example app uses the Redis channel layer implementation asgi_redis
-        # "BACKEND": "asgi_redis.RedisChannelLayer",
-        "BACKEND": "redis_cache.RedisCache",
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        # "BACKEND": "redis_cache.RedisCache",
         "CONFIG": {
             # "hosts": [(redis_host, 6379)],
             "hosts": [(hostname, 8989)],
