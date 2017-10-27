@@ -16,7 +16,6 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = 'x*(eu!caxd-(*j30ygu5*sk$(o64=k6i$-j^co8!m@0g+9y!sp'
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -57,14 +55,22 @@ ROOT_URLCONF = 'FaultDetector.urls'
 
 redis_host = os.environ.get('REDIS_HOST', 'localhost')
 
+host = 'ec2-52-44-142-173.compute-1.amazonaws.com'
+user = 'h'
+port = '8989'
+password = 'p6ed78577301a711d4cdb1a066d216165b21887d4336d9aaae911a16899867ad3'
+hostname = 'redis://{0}:{1}@{2}'.format(user, password, host)
+
 # Channel layer definitions
 # http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
 CHANNEL_LAYERS = {
     "default": {
         # This example app uses the Redis channel layer implementation asgi_redis
-        "BACKEND": "asgi_redis.RedisChannelLayer",
+        # "BACKEND": "asgi_redis.RedisChannelLayer",
+        "BACKEND": "redis_cache.RedisCache",
         "CONFIG": {
-            "hosts": [(redis_host, 6379)],
+            # "hosts": [(redis_host, 6379)],
+            "hosts": [(hostname, 8989)],
         },
         "ROUTING": "FaultDetector.routing.channel_routing",
     },
@@ -88,7 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'FaultDetector.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -120,7 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -133,7 +137,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
