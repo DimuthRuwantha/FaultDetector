@@ -5,15 +5,17 @@ from django.views.generic import View
 from .forms import RegisterForm, LoginForm
 from .models import TrainingLog
 from .models import PreFault
-from channels.channel import Group
+# from channels.channel import Group
 from notifications import utils
 from notifications.models import Room
 import json
-from . import neural
+# from . import neural
 from ArtificialNeuralNetwork import NeuralNets as staticnn
 from ArtificialNeuralNetwork.NeuralNets import NeuralNets
-from ArtificialNeuralNetwork.NeuralNetwork import NeuralNetObject
-import datetime
+# from ArtificialNeuralNetwork.NeuralNetwork import NeuralNetObject
+from datetime import datetime, timedelta
+import pytz
+
 
 neural_object = staticnn.css
 
@@ -68,8 +70,10 @@ class Fault(View):
         result = neural_object.predict([lst])
         faults = NeuralNets.process_fault(result)
 
-        time = datetime.datetime.now()
-        time_str = datetime.datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+        now = datetime.now()
+        zone = pytz.timezone('Asia/Colombo')
+        date_stamp = zone.localize(now)
+        time_str = date_stamp.strftime('%H:%M:%S %d-%m-%Y')
 
         message = "A Fault has been occurred in {0} which is identified as a {1} fault at {2}".format(location,
                                                                                                       faults[0],
@@ -81,7 +85,7 @@ class Fault(View):
         room.send_message(r_message, user)
 
         # save data to the database
-        fault = PreFault(date=time, location=location, fault=faults[0], i_a=i1, i_b=i2, i_c=i3, v_a=v1, v_b=v2, v_c=v3)
+        fault = PreFault(date=date_stamp, location=location, fault=faults[0], i_a=i1, i_b=i2, i_c=i3, v_a=v1, v_b=v2, v_c=v3)
         fault.save()
 
         return HttpResponse("Message Received")
@@ -117,7 +121,7 @@ class NeuralNetwork(View):
 
         tr, tst, pred, acc = ann.run(test_accuracy=check_tests)
 
-        traing_log = TrainingLog(trained_by=user, time=datetime.datetime.now(), train_ratio=ratio,
+        traing_log = TrainingLog(trained_by=user, time=datetime.now(), train_ratio=ratio,
                                  algorithm_name=algorithm, hidden_layer_nodes=h_l_nodes, accuracy_tested=check_tests,
                                  trained_inputs=tr, tested_inputs=tst, accuracy=acc)
         traing_log.save()
