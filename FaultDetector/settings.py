@@ -70,7 +70,7 @@ CHANNEL_LAYERS = {
         # "BACKEND": "redis_cache.RedisCache",
         "CONFIG": {
             # "hosts": [(redis_host, 6379)],
-            "hosts": [(hostname, 8989)],
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
         "ROUTING": "FaultDetector.routing.channel_routing",
     },
