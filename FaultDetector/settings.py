@@ -98,7 +98,10 @@ WSGI_APPLICATION = 'FaultDetector.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config(default='sqlite:///db.sqlite')}
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+# DATABASES = {'default': dj_database_url.config(default='sqlite:///db.sqlite')}
+DATABASES = {'default': DATABASE_URL}
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
