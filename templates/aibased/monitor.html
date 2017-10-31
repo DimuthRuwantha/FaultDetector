@@ -27,26 +27,28 @@
         <img id="a2_ab" style="position:absolute; top:38%; left:52%; width:10%; height:8%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
 
-        <div style="background-color: #888888; opacity: 1; text-align: center;">
-            <img class="img img-responsive center-block" src="{% static 'img/towers1.png' %}">
-        </div>
-        <div>
+        <div style="background-color: #888888; opacity: 0.7; text-align: center; border-radius: 10px">
+            <img class="img img-responsive center-block" src="{% static 'img/towers1.png' %}" style="opacity: 1">
         </div>
 
+        <div class="row" style="height: 10px">
+        </div>
 
+    <!-- Button trigger to get faults -->
         <div class="col-sm-4">
             <section>
-                <button class="room-link btn btn-link" data-room-id="{{ room.id }}">
+                <button class="room-link btn btn-link btn-block" data-room-id="{{ room.id }}">
                     <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>Get Alerts
                 </button>
             </section>
         </div>
 
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal">
+        <!-- Button trigger for previous Faults -->
+    <div class="col-sm-4">
+        <button type="button" class="btn btn-link btn-block" data-toggle="modal" data-target="#myModal">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Previous Faults
         </button>
+    </div>
 
         <!-- Modal for Previous Data-->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

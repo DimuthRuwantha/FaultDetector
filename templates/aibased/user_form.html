@@ -4,8 +4,9 @@
 
 {% block body %}
     <div class="container">
-            <div class="row">
-                <div class="col-sm-offset-3 col-sm-6">
+
+            <div class="row" style="position:absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%)">
+{#                <div class="col-sm-offset-3 col-sm-6">#}
                     <form class="form-horizontal" role="form" action="" method="post">
                         {% csrf_token %}
                         {% include 'aibased/form-template.html' %}
@@ -13,7 +14,7 @@
                             <button class="btn btn-info" type="submit">Login</button>
                         </div>
                     </form>
-                </div>
+{#                </div>#}
             </div>
     </div>
 {% endblock %}
