@@ -9,8 +9,8 @@ urlpatterns = [
     # /aibased/monitor
     url(r'^monitor$', views.Monitor.as_view(), name='monitor'),
 
-    # /aibased/monitor/fault
-    url(r'^monitor/fault$', views.Fault.as_view(), name='fault'),
+    # /aibased/fault
+    url(r'^fault$', views.Fault.as_view(), name='fault'),
 
     # /aibased/ann
     url(r'^ann$', views.NeuralNetwork.as_view(), name='ann'),
