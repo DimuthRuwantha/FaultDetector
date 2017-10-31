@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic import View
 from .forms import RegisterForm, LoginForm
@@ -49,6 +51,7 @@ class Monitor(generic.ListView):
 
 
 # aibased/monitor/fault
+@method_decorator(csrf_exempt, name='dispatch')
 class Fault(View):
     def get(self, request):
         return HttpResponse("OK")
@@ -70,7 +73,7 @@ class Fault(View):
         result = neural_object.predict([lst])
         faults = NeuralNets.process_fault(result)
 
-        now = datetime.now()
+        now = datetime.now() + timedelta(hours=5, minutes=30)
         zone = pytz.timezone('Asia/Colombo')
         date_stamp = zone.localize(now)
         time_str = date_stamp.strftime('%H:%M:%S %d-%m-%Y')
@@ -121,7 +124,8 @@ class NeuralNetwork(View):
 
         tr, tst, pred, acc = ann.run(test_accuracy=check_tests)
 
-        traing_log = TrainingLog(trained_by=user, time=datetime.now(), train_ratio=ratio,
+        date_stamp = datetime.now() + timedelta(hours=5, minutes=30)
+        traing_log = TrainingLog(trained_by=user, time=date_stamp, train_ratio=ratio,
                                  algorithm_name=algorithm, hidden_layer_nodes=h_l_nodes, accuracy_tested=check_tests,
                                  trained_inputs=tr, tested_inputs=tst, accuracy=acc)
         traing_log.save()
