@@ -4,37 +4,43 @@
 
 {% block body %}
     <div class="container">
-        <h3 style="color: whitesmoke; text-align: center">Monitoring system</h3>
+        <h3 style="color: whitesmoke; text-align: center">Online Monitoring System in Region1</h3>
 
         {#        A - G Fault location 1 #}
         <img id="a1_ag" style="position:absolute; top:45%; left:35%; width:10%; height:20%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
         {#         A - G Fault location 2 #}
-        <img id="a2_ag" style="position:absolute; top:45%; left:52%; width:10%; height:20%; visibility: hidden"
+        <img id="a2_ag" style="position:absolute; top:45%; left:70%; width:10%; height:20%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
 
         {#         B - G Fault location 1 #}
         <img id="a1_bg" style="position:absolute; top:38%; left:35%; width:10%; height:20%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
         {#          B - G fault location 2#}
-        <img id="a2_bg" style="position:absolute; top:38%; left:52%; width:10%; height:20%; visibility: hidden"
+        <img id="a2_bg" style="position:absolute; top:38%; left:70%; width:10%; height:20%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
 
         {#          A - B - G Fault location 1 #}
         <img id="a1_ab" style="position:absolute; top:38%; left:35%; width:10%; height:8%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
         {#          A - B - G fault location 2#}
-        <img id="a2_ab" style="position:absolute; top:38%; left:52%; width:10%; height:8%; visibility: hidden"
+        <img id="a2_ab" style="position:absolute; top:38%; left:70%; width:10%; height:8%; visibility: hidden"
              src="{% static 'img/lightning.svg' %}">
 
-        <div style="background-color: #888888; opacity: 0.7; text-align: center; border-radius: 10px">
+        <div style="background-color: #888888; opacity: 0.85; text-align: center; border-radius: 10px">
             <img class="img img-responsive center-block" src="{% static 'img/towers1.png' %}" style="opacity: 1">
         </div>
+
+                <h3 style="position: absolute; top: 70%; left: 19%">Area 1</h3>
+                <h3 style="position: absolute; top: 70%; left: 38%">Area 2</h3>
+                <h3 style="position: absolute; top: 70%; left: 57%">Area 3</h3>
+                <h3 style="position: absolute; top: 70%; left: 75%">Area 4</h3>
+
 
         <div class="row" style="height: 10px">
         </div>
 
-    <!-- Button trigger to get faults -->
+        <!-- Button trigger to get faults -->
         <div class="col-sm-4">
             <section>
                 <button class="room-link btn btn-link btn-block" data-room-id="{{ room.id }}">
@@ -44,11 +50,11 @@
         </div>
 
         <!-- Button trigger for previous Faults -->
-    <div class="col-sm-4">
-        <button type="button" class="btn btn-link btn-block" data-toggle="modal" data-target="#myModal">
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Previous Faults
-        </button>
-    </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-link btn-block" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Previous Faults
+            </button>
+        </div>
 
         <!-- Modal for Previous Data-->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
